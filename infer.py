@@ -100,9 +100,9 @@ def is_speech_clip(y_clip, sr):
 
 def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     dysarthric_confidences = []
-    print("mahvash")
+    
     with sf.SoundFile(audio_path) as f:
-        print("thanks")
+        
         original_sr = f.samplerate
         frame_size = CLIP_DURATION * original_sr
         total_frames = len(f)
@@ -179,7 +179,8 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     return {
         "final_prediction": final_prediction,
         "max_dysarthric_confidence": max(dysarthric_confidences) if dysarthric_confidences else 0.0,
-        "clip_csv": filename
+        "clip_csv": filename,
+        "clips_preds":clip_preds
     }
 
 
