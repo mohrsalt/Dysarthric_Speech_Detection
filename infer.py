@@ -68,6 +68,7 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
 def modelpath():
     return hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
 #model_path=pipeline(model="Mohor/Wav2Vec2Full")
+model_path=modelpath()
 #model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
 label_path = "label_encoder_full2.pkl"
 max_length = 32007
