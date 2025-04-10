@@ -66,11 +66,11 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
         
 @st.cache_data
 def modelpath():
-    return hf_hub_download(repo_id="Mohor/crossvalmodel", filename="custom_wav2vec2_model_best.pt")
+    return hf_hub_download(repo_id="Mohor/Wav2Vec2Aug", filename="custom_wav2vec2_model_aug.pt")
 #model_path=pipeline(model="Mohor/Wav2Vec2Full")
 model_path=modelpath()
 #model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
-label_path = "label_encoder_full3.pkl"
+label_path = "label_encoder_full_aug.pkl"
 max_length = 32007
 
 device = torch.device("cpu")
@@ -114,7 +114,7 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
             
             remaining_frames = total_frames - f.tell()
             if remaining_frames < frame_size:
-                 print("qqq")
+                 
                  break  # Skip incomplete chunk (optional)
             read_frames = min(frame_size, remaining_frames)
 
