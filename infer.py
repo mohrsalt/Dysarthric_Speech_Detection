@@ -2,6 +2,7 @@
 import torch
 import librosa
 import transformers
+from transformers import pipeline
 import numpy as np
 import streamlit as st
 import pandas as pd
@@ -63,10 +64,10 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
         pooled_features = attended_features.mean(dim=1)
         return self.classifier(pooled_features)
         
-@st.cache_data(persist="disk")
-def modelpath():
-    return hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
-model_path=modelpath()
+#@st.cache_data(persist="disk")
+#def modelpath():
+    #return hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
+model_path=pipeline("Mohor/Wav2Vec2Full")
 #model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
 label_path = "label_encoder_full2.pkl"
 max_length = 32007
