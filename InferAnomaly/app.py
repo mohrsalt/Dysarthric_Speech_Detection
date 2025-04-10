@@ -4,7 +4,7 @@ import numpy as np
 import librosa
 import soundfile as sf
 import io
-from .infer import predict_from_audio
+from InferAnomaly.infer import predict_from_audio
   # Assuming your function is imported from 'infer.py'
 
 st.set_page_config(page_title="Foreign Object Detection", layout="centered")
