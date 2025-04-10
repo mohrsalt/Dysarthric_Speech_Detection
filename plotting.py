@@ -1,38 +1,59 @@
-import plotly.graph_objects as go
+import numpy as np
+import librosa
+import plotly.graph_objs as go
 
-def create_confidence_bar_plot(data):
-    # Filter only relevant entries
-    filtered_data = [
-        entry for entry in data
-        if entry["confidence"] is not None and entry["prediction"] in ["dysarthric", "normal"]
-    ]
+def plot_colored_waveform(audio_path, prediction_segments):
+    # Load audio
+    y, sr = librosa.load(audio_path, sr=None)
+    
+    # Normalize the waveform
+    y = y / np.max(np.abs(y))
+    
+    # Generate time axis
+    duration = len(y) / sr
+    time = np.linspace(0, duration, num=len(y))
 
-    # Prepare the data for plotting
-    x_vals = [(entry["start_time"] + entry["end_time"]) / 2 for entry in filtered_data]
-    widths = [entry["end_time"] - entry["start_time"] for entry in filtered_data]
-    y_vals = [entry["confidence"] for entry in filtered_data]
-    colors = ['red' if entry["prediction"] == "dysarthric" else 'green' for entry in filtered_data]
+    # Mapping labels to colors
+    label_to_color = {
+        'Dysarthric': 'red',
+        'Control': 'blue',
+        'non-speech': 'black'
+    }
 
-    # Create the plotly figure
+    # Initialize plot
     fig = go.Figure()
+    
+    # Process each segment
+    for segment in prediction_segments:
+        start = segment['start_time']
+        end = segment['end_time']
+        label = str(segment['prediction'])  # In case it's np.str_
+        color = label_to_color.get(label, 'gray')  # fallback color
 
-    fig.add_trace(go.Bar(
-        x=x_vals,
-        y=y_vals,
-        width=widths,
-        marker_color=colors,
-        name="Confidence",
-        hovertext=[f"{entry['prediction']} ({entry['confidence']})" for entry in filtered_data],
-    ))
+        # Get sample range for this segment
+        start_sample = int(start * sr)
+        end_sample = int(end * sr)
 
-    # Update layout for the figure
+        # Clip indices to avoid overflow
+        start_sample = max(0, min(start_sample, len(y)))
+        end_sample = max(0, min(end_sample, len(y)))
+
+        # Plot segment
+        fig.add_trace(go.Scatter(
+            x=time[start_sample:end_sample],
+            y=y[start_sample:end_sample],
+            mode='lines',
+            line=dict(color=color),
+            name=label,
+            showlegend=False  # Hide legend for now
+        ))
+
     fig.update_layout(
-        title="Confidence of Dysarthric Predictions Over Time",
-        xaxis_title="Time (s)",
-        yaxis_title="Confidence",
-        bargap=0.1,
-        showlegend=False,
-        xaxis=dict(tickmode='linear')
+        title='Audio Waveform with Segment-Based Predictions',
+        xaxis_title='Time (s)',
+        yaxis_title='Amplitude',
+        template='plotly_white',
+        height=300
     )
-
+    
     return fig
