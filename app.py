@@ -5,7 +5,7 @@ import librosa
 import soundfile as sf
 import io
 from infer import predict_from_audio
-from plotting import create_confidence_bar_plot
+from plotting import plot_colored_waveform
   # Assuming your function is imported from 'infer.py'
 
 #st.set_page_config(page_title="Foreign Object Detection", layout="centered")
@@ -62,7 +62,7 @@ if audio_data and st.button("Infer"):
             st.success(f"Prediction Result: {prediction_result["final_prediction"]}")
             datatemp=prediction_result["clips_preds"]
             st.success(datatemp)
-            fig=create_confidence_bar_plot(datatemp)
+            fig=plot_colored_waveform(audio_data,datatemp)
             st.plotly_chart(fig)
             
         except Exception as e:
