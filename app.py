@@ -61,7 +61,7 @@ if audio_data and st.button("Infer"):
             # Display the result from the prediction
             st.success(f"Prediction Result: {prediction_result["final_prediction"]}")
             datatemp=prediction_result["clips_preds"]
-            st.success(datatemp)
+            
             fig=plot_colored_waveform(audio_data,datatemp)
             st.plotly_chart(fig)
             
