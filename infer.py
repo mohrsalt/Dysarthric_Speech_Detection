@@ -174,7 +174,7 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     filename = os.path.basename(audio_path).replace(".wav", "") + "_clip_preds.csv"
     df.to_csv(filename, index=False)
     
-    final_prediction = "dysarthric" if dysarthric_confidences and max(dysarthric_confidences) > 0.5 else "normal"
+    final_prediction = "Abnormal speech" if dysarthric_confidences and max(dysarthric_confidences) > 0.5 else "Normal speech"
 
     return {
         "final_prediction": final_prediction,
