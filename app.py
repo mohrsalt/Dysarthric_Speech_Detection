@@ -5,6 +5,7 @@ import librosa
 import soundfile as sf
 import io
 from infer import predict_from_audio
+from plotting import create_confidence_bar_plot
   # Assuming your function is imported from 'infer.py'
 
 #st.set_page_config(page_title="Foreign Object Detection", layout="centered")
@@ -59,6 +60,9 @@ if audio_data and st.button("Infer"):
 
             # Display the result from the prediction
             st.success(f"Prediction Result: {prediction_result["final_prediction"]}")
+            datatemp=prediction_result["clips_preds"]
+            fig=create_confidence_bar_plot(datatemp)
+            st.plotly_chart(fig)
             
         except Exception as e:
             st.error(f"Error processing audio: {e}")
