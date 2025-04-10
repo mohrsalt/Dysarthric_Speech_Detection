@@ -10,3 +10,4 @@ huggingface_hub
 scikit-learn
 torch
 audio_recorder_streamlit
+plotly
