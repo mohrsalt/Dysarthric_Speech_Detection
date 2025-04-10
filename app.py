@@ -61,7 +61,7 @@ if audio_data and st.button("Infer"):
             # Display the result from the prediction
             st.success(f"Prediction Result: {prediction_result["final_prediction"]}")
             datatemp=prediction_result["clips_preds"]
-            st.success(prediction_result["max_dysarthric_confidence"])
+            st.success(clips_preds)
             fig=create_confidence_bar_plot(datatemp)
             st.plotly_chart(fig)
             
