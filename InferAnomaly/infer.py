@@ -64,7 +64,7 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
         return self.classifier(pooled_features)
 
 model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
-label_path = "../label_encoder_full2.pkl"
+label_path = "InferAnomaly/label_encoder_full2.pkl"
 max_length = 32007
 
 device = torch.device("cpu")
