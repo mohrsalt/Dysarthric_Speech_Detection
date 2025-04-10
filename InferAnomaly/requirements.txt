@@ -4,7 +4,7 @@ transformers==4.50.3
 librosa
 soundfile
 webrtcvad
-pickle
+
 pydantic
 huggingface_hub
 scikit-learn
