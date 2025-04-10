@@ -3,7 +3,7 @@ import torch
 import librosa
 import transformers
 import numpy as np
-
+import streamlit as st
 import pandas as pd
 import soundfile as sf
 from datetime import datetime
@@ -62,8 +62,12 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
         attended_features, _ = self.self_attention(attention_input, attention_input, attention_input)
         pooled_features = attended_features.mean(dim=1)
         return self.classifier(pooled_features)
-
-model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
+        
+@st.cache_data(persist="disk")
+def modelpath():
+    return hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
+model_path=modelpath()
+#model_path = hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
 label_path = "label_encoder_full2.pkl"
 max_length = 32007
 
