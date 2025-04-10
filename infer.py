@@ -64,7 +64,7 @@ class CustomWav2Vec2Classifier(torch.nn.Module):
         pooled_features = attended_features.mean(dim=1)
         return self.classifier(pooled_features)
         
-@st.cache_data(persist="disk")
+@st.cache_data
 def modelpath():
     return hf_hub_download(repo_id="Mohor/Wav2Vec2Full", filename="custom_wav2vec2_model_full.pt")
 #model_path=pipeline(model="Mohor/Wav2Vec2Full")
