@@ -22,7 +22,7 @@ st.markdown("""
 
     .block-container {
         padding: 2rem 3rem !important;
-        max-width: 100%;
+        max-width: 80%;
     }
 
     h1 {
@@ -105,7 +105,7 @@ st.markdown("""
     }
             .glass-base {
     height: 4px;
-    width: 100%;
+    width: 80%;
     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
     border-radius: 2px;
     margin: 3rem 0;
@@ -205,7 +205,7 @@ with st.container():
 
                     # Plot waveform
                     fig = plot_colored_waveform(audio_data, result["clips_preds"])
-                    fig.update_layout(height=600, width=1100)
+                    fig.update_layout(height=600, width=800)
                     st.plotly_chart(fig, use_container_width=True)
 
                     # Replay audio after plot
