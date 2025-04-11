@@ -22,7 +22,7 @@ st.markdown("""
 
     .block-container {
         padding: 2rem 3rem !important;
-        max-width: 80%;
+        max-width: 60%;
     }
 
     h1 {
@@ -105,7 +105,7 @@ st.markdown("""
     }
             .glass-base {
     height: 4px;
-    width: 80%;
+    width: 60%;
     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
     border-radius: 2px;
     margin: 3rem 0;
