@@ -162,17 +162,19 @@ with st.container():
     st.markdown("<h2>Step 2️⃣: Preview</h2>", unsafe_allow_html=True)
 
     if st.button("🔄 Reset All"):
-            audio_bytes = None
-            uploaded_file = None
-            audio_data = None
-            audio_file = None
+        audio_bytes = None
+        uploaded_file = None
+        audio_data = None
+        audio_file = None
 
+# If audio is recorded or uploaded, save it
     if audio_bytes:
         st.audio(audio_bytes, format="audio/wav")
         audio_file = "recorded_audio.wav"
         with open(audio_file, "wb") as f:
             f.write(audio_bytes)
         audio_data = audio_file
+
     elif uploaded_file:
         st.audio(uploaded_file, format="audio/wav")
         audio_file = "uploaded_audio.wav"
