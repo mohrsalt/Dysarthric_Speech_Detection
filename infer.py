@@ -188,9 +188,11 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
             final_prediction="Normal speech"
     if(dysarthric_confidences):
         if(final_prediction == "Abnormal speech"):
-            conf=max(dysarthric_confidences)
+            conf=sum(x for x in dysarthric_confidences if x > 0.5) / sum(1 for x in dysarthric_confidences if x > 0.5)
+
         else:
-            conf=1-min(dysarthric_confidences)
+            conf=((1-x) for x in dysarthric_confidences if x <= 0.5) / sum(1 for x in dysarthric_confidences if x <= 0.5)
+
     return {
         "final_prediction": final_prediction,
         "max_confidence": conf,#what if complete slient
