@@ -179,12 +179,21 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     df = pd.DataFrame(clip_preds)
     filename = os.path.basename(audio_path).replace(".wav", "") + "_clip_preds.csv"
     df.to_csv(filename, index=False)
-    
-    final_prediction = "Abnormal speech" if dysarthric_confidences and max(dysarthric_confidences) > 0.5 else "Normal speech"
-    
+    conf=100 
+    final_prediction = "No Speech- Silence"
+    if(dysarthric_confidences):
+        if(max(dysarthric_confidences) > 0.5):
+            final_prediction="Abnormal speech"
+        else:
+            final_prediction="Normal speech"
+    if(dysarthric_confidences):
+        if(final_prediction == "Abnormal speech"):
+            conf=max(dysarthric_confidences)
+        else:
+            conf=1-min(dysarthric_confidences)
     return {
         "final_prediction": final_prediction,
-        "max_confidence": max(dysarthric_confidences) if final_prediction == "Abnormal speech" else 1-min(dysarthric_confidences),#what if complete slient
+        "max_confidence": conf,#what if complete slient
         "clip_csv": filename,
         "clips_preds":clip_preds
     }
