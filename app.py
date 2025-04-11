@@ -199,7 +199,7 @@ with st.container():
                     st.markdown(f"<div class='result-box'>🟢 Final Prediction:\n<strong>{result['final_prediction']}</strong></div>", unsafe_allow_html=True)
 
                     # Display per-clip predictions
-                    st.markdown(f"<div class='result-box'>📋 Confidence in Prediction:\n{round(result['max_confidence'],3)*100} %</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div class='result-box'>📋 Confidence in Prediction:\n{round(result['max_confidence']*100,3)} %</div>", unsafe_allow_html=True)
 
                     # Plot waveform
                     fig = plot_colored_waveform(audio_data, result["clips_preds"])
