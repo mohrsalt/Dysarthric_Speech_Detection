@@ -8,16 +8,41 @@ st.set_page_config(
     page_title="Abnormal Speech Detection",
     layout="wide"
 )
-
-# Custom CSS
 st.markdown("""
     <style>
     html, body, [class*="css"] {
         font-family: 'Georgia', serif;
-        font-size: 22px;
+        font-size: 1.2rem;
         background-color: #f8f9fa;
         color: #1a1a1a;
         overflow-x: hidden;
+    }
+
+    @media (max-width: 768px) {
+        html, body, [class*="css"] {
+            font-size: 1rem;
+        }
+        h1 {
+            font-size: 2rem !important;
+        }
+        h2 {
+            font-size: 1.4rem !important;
+        }
+        .block-container {
+            padding: 1.2rem 1rem !important;
+            max-width: 95% !important;
+        }
+        .result-box {
+            font-size: 1rem !important;
+        }
+        .stButton > button {
+            font-size: 1rem !important;
+            padding: 0.5rem 1rem !important;
+        }
+        .audio-recorder-container svg {
+            width: 60px !important;
+            height: 60px !important;
+        }
     }
 
     .block-container {
@@ -26,14 +51,14 @@ st.markdown("""
     }
 
     h1 {
-        font-size: 48px;
+        font-size: 3rem;
         color: #101820;
         font-weight: 700;
         margin-bottom: 0.5em;
     }
 
     h2 {
-        font-size: 32px;
+        font-size: 2rem;
         color: #1a1a1a;
         font-weight: 600;
         margin-top: 1.5em;
@@ -46,18 +71,18 @@ st.markdown("""
         margin-bottom: 2rem;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    .glass-sep {
-    height: 2px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255,255,255,0.6), rgba(255, 255, 255, 0));
-    border-radius: 1px;
-    margin: 3rem 0;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(2px);
-}
 
+    .glass-sep {
+        height: 2px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255,255,255,0.6), rgba(255, 255, 255, 0));
+        border-radius: 1px;
+        margin: 3rem 0;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(2px);
+    }
 
     .result-box {
-        font-size: 24px;
+        font-size: 1.25rem;
         background: #ffffff;
         color: #111;
         padding: 1.25rem 1.5rem;
@@ -71,7 +96,7 @@ st.markdown("""
     }
 
     .stButton > button {
-        font-size: 22px;
+        font-size: 1.25rem;
         padding: 0.75rem 2rem;
         border-radius: 12px;
         background: linear-gradient(to right, #6a11cb, #2575fc);
@@ -82,50 +107,156 @@ st.markdown("""
 
     .stButton > button:hover {
         background: linear-gradient(to right, #2575fc, #6a11cb);
-        color: pink; /* Font color on hover */
+        color: pink;
         transform: scale(1.05);
     }
 
-    .vertical-separator {
-        border-left: 2px solid #cccccc;
+    .vertical-glass-separator {
+        width: 2px;
         height: 100%;
-        margin: auto 1rem;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));
+        border-radius: 1px;
+        box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        backdrop-filter: blur(2px);
+        margin: 0 1.5rem;
     }
 
     footer {
         text-align: center;
-        font-size: 18px;
+        font-size: 1rem;
         margin-top: 3rem;
         color: #666;
     }
 
-    .audio-recorder-container svg {
-        width: 80px !important;
-        height: 80px !important;
+    .glass-base {
+        height: 4px;
+        width: 60%;
+        background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
+        border-radius: 2px;
+        margin: 3rem 0;
+        box-shadow: 0 0 15px rgba(255,255,255,0.4), 0 2px 10px rgba(0,0,0,0.1);
+        backdrop-filter: blur(3px);
+        transition: all 0.3s ease-in-out;
     }
-            .glass-base {
-    height: 4px;
-    width: 60%;
-    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
-    border-radius: 2px;
-    margin: 3rem 0;
-    box-shadow: 0 0 15px rgba(255,255,255,0.4), 0 2px 10px rgba(0,0,0,0.1);
-    backdrop-filter: blur(3px);
-    transition: all 0.3s ease-in-out;
-}
-
-            .vertical-glass-separator {
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));
-    border-radius: 1px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.2);
-    backdrop-filter: blur(2px);
-    margin: 0 1.5rem;
-}
-
     </style>
 """, unsafe_allow_html=True)
+# Custom CSS
+# st.markdown("""
+#     <style>
+#     html, body, [class*="css"] {
+#         font-family: 'Georgia', serif;
+#         font-size: 22px;
+#         background-color: #f8f9fa;
+#         color: #1a1a1a;
+#         overflow-x: hidden;
+#     }
+
+#     .block-container {
+#         padding: 2rem 3rem !important;
+#         max-width: 60%;
+#     }
+
+#     h1 {
+#         font-size: 48px;
+#         color: #101820;
+#         font-weight: 700;
+#         margin-bottom: 0.5em;
+#     }
+
+#     h2 {
+#         font-size: 32px;
+#         color: #1a1a1a;
+#         font-weight: 600;
+#         margin-top: 1.5em;
+#     }
+
+#     .glass-box {
+#         background: rgba(255,255,255,0.95);
+#         border-radius: 20px;
+#         padding: 2rem 3rem;
+#         margin-bottom: 2rem;
+#         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+#     }
+#     .glass-sep {
+#     height: 2px;
+#     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255,255,255,0.6), rgba(255, 255, 255, 0));
+#     border-radius: 1px;
+#     margin: 3rem 0;
+#     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+#     backdrop-filter: blur(2px);
+# }
+
+
+#     .result-box {
+#         font-size: 24px;
+#         background: #ffffff;
+#         color: #111;
+#         padding: 1.25rem 1.5rem;
+#         margin-top: 1.5rem;
+#         border-radius: 14px;
+#         font-weight: 600;
+#         border-left: 6px solid #4b6cb7;
+#         word-wrap: break-word;
+#         overflow-wrap: break-word;
+#         white-space: pre-wrap;
+#     }
+
+#     .stButton > button {
+#         font-size: 22px;
+#         padding: 0.75rem 2rem;
+#         border-radius: 12px;
+#         background: linear-gradient(to right, #6a11cb, #2575fc);
+#         color: white;
+#         border: none;
+#         transition: transform 0.2s ease-in-out, background 0.3s;
+#     }
+
+#     .stButton > button:hover {
+#         background: linear-gradient(to right, #2575fc, #6a11cb);
+#         color: pink; /* Font color on hover */
+#         transform: scale(1.05);
+#     }
+
+#     .vertical-separator {
+#         border-left: 2px solid #cccccc;
+#         height: 100%;
+#         margin: auto 1rem;
+#     }
+
+#     footer {
+#         text-align: center;
+#         font-size: 18px;
+#         margin-top: 3rem;
+#         color: #666;
+#     }
+
+#     .audio-recorder-container svg {
+#         width: 80px !important;
+#         height: 80px !important;
+#     }
+#             .glass-base {
+#     height: 4px;
+#     width: 60%;
+#     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
+#     border-radius: 2px;
+#     margin: 3rem 0;
+#     box-shadow: 0 0 15px rgba(255,255,255,0.4), 0 2px 10px rgba(0,0,0,0.1);
+#     backdrop-filter: blur(3px);
+#     transition: all 0.3s ease-in-out;
+# }
+
+#             .vertical-glass-separator {
+#     width: 2px;
+#     height: 100%;
+#     background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));
+#     border-radius: 1px;
+#     box-shadow: 0 0 10px rgba(255,255,255,0.2);
+#     backdrop-filter: blur(2px);
+#     margin: 0 1.5rem;
+# }
+
+#     </style>
+# """, unsafe_allow_html=True)
 
 # Header
 st.markdown("<h1>🎙 Abnormal Speech Detection</h1>", unsafe_allow_html=True)
