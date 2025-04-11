@@ -97,7 +97,11 @@ def is_speech_clip(y_clip, sr):
         if vad.is_speech(frame, sample_rate=sr):
             return True
     return False
-
+mapping={
+    "Dysarthric":"Abnormal Speech",
+    "Control":"Normal Speech",
+    "non-speech":"Non-speech"
+}
 def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     dysarthric_confidences = []
     
@@ -140,7 +144,7 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
                 clip_preds.append({
                     "start_time": clip_start_sec,
                     "end_time": clip_end_sec,
-                    "prediction": "non-speech",
+                    "prediction": mapping.get("non-speech", "Non-speech"),
                     "confidence": None
                 })
                 continue
@@ -161,11 +165,13 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
 
             if pred_label == "Dysarthric":
                 dysarthric_confidences.append(confidence)
+            else:
+                dysarthric_confidences.append(1 - confidence)
 
             clip_preds.append({
                 "start_time": clip_start_sec,
                 "end_time": clip_end_sec,
-                "prediction": pred_label,
+                "prediction": mapping.get(pred_label, "Unknown"),
                 "confidence": confidence
             })
 
@@ -178,7 +184,7 @@ def predict_from_audio(audio_path, save_csv_path="clip_predictions.csv"):
     
     return {
         "final_prediction": final_prediction,
-        "max_dysarthric_confidence": max(dysarthric_confidences) if dysarthric_confidences else 0.0,
+        "max_confidence": max(dysarthric_confidences) if final_prediction == "Abnormal speech" else 1-min(dysarthric_confidences),#what if complete slient
         "clip_csv": filename,
         "clips_preds":clip_preds
     }

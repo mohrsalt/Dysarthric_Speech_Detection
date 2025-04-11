@@ -15,13 +15,16 @@ def plot_colored_waveform(audio_path, prediction_segments):
 
     # Mapping labels to colors
     label_to_color = {
-        'Dysarthric': 'red',
-        'Control': 'blue',
-        'non-speech': 'black'
+        'Abnormal Speech': 'red',
+        'Normal Speech': 'blue',
+        'Non-speech': 'black'
     }
 
     # Initialize plot
     fig = go.Figure()
+
+    # Track which labels have already been added to the legend
+    added_labels = set()
     
     # Process each segment
     for segment in prediction_segments:
@@ -38,6 +41,11 @@ def plot_colored_waveform(audio_path, prediction_segments):
         start_sample = max(0, min(start_sample, len(y)))
         end_sample = max(0, min(end_sample, len(y)))
 
+        # Show legend only once per label
+        show_legend = label not in added_labels
+        if show_legend:
+            added_labels.add(label)
+
         # Plot segment
         fig.add_trace(go.Scatter(
             x=time[start_sample:end_sample],
@@ -45,7 +53,7 @@ def plot_colored_waveform(audio_path, prediction_segments):
             mode='lines',
             line=dict(color=color),
             name=label,
-            showlegend=False  # Hide legend for now
+            showlegend=show_legend
         ))
 
     fig.update_layout(
@@ -53,7 +61,15 @@ def plot_colored_waveform(audio_path, prediction_segments):
         xaxis_title='Time (s)',
         yaxis_title='Amplitude',
         template='plotly_white',
-        height=300
+        height=500,
+        width=1400,  # Increased width for a wider plot
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
     )
     
     return fig
