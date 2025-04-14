@@ -259,7 +259,7 @@ st.markdown("""
 # """, unsafe_allow_html=True)
 
 # Header
-st.markdown("<h1>🎙 Abnormal Speech Detection</h1>", unsafe_allow_html=True)
+st.markdown("<h1>🎙 Foreign Object Detection</h1>", unsafe_allow_html=True)
 st.markdown("Detect abnormalities in your voice using an AI-based model.")
 
 # Step 1: Record or Upload
