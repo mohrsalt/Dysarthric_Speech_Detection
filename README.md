@@ -1,3 +1,1 @@
-ChatGPT said:
-
-This project is a lightweight Streamlit app that detects abnormal/foreign speech in short audio clips using a fine-tuned Wav2Vec2 model. You can record in the browser or upload a .wav; the app applies voice-activity detection to segment the audio (~3 s windows), classifies each segment and the full clip as Abnormal, Normal, or Non-speech, and shows an interactive waveform with results plus CSV export.
+This project is a lightweight Streamlit app that detects abnormal speech in short audio clips using a fine-tuned Wav2Vec2 model. You can record in the browser or upload a .wav; the app applies voice-activity detection to segment the audio (~3 s windows), classifies each segment and the full clip as Abnormal, Normal, or Non-speech, and shows an interactive waveform with results plus CSV export.
